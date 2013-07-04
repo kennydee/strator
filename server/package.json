@@ -1,0 +1,25 @@
+{
+  "name": "application-name",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "express": "*",
+    "jade": "*",
+    "stylus": "*",
+    "mongoose": "*",
+    "async": "*",
+    "underscopre": "*"
+  },
+  "devDependencies": {
+    "supertest": "*",
+    "should": "*",
+    "istanbul": "*",
+    "mocha": "*",
+    "optimist": "*",
+    "jshint": "*",
+    "pow-mongodb-fixtures": "*",
+  }
+}
