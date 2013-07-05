@@ -1,0 +1,19 @@
+{
+  "name": "Strator",
+  "version": "0.0.1",
+  "dependencies": {
+    "angular": "~1.0.7",
+    "angular-bootstrap": "~0.4.0",
+    "angular-cookies": "~1.0.7",
+    "angular-resource": "~1.0.7",
+    "angular-ui": "~0.4.0"
+  },
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "components",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
