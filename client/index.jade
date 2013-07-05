@@ -1,14 +1,15 @@
 doctype
 
-html
+html(ng-app="strator")
   head
     title Strator
-    script(src="./bower_components/angular/angular.js")
-    script(src="./bower_components/angular-ui/build/angular-ui.js")
-    script(src="./bower_components/angular-bootstrap.js")
+    script(src="bower_components/angular/angular.min.js")
+    script(src="bower_components/angular-bootstrap/ui-bootstrap.min.js")
     
-    script(src="./javascript/app.js")
+    script(src="javascript/app.js")
+    script(src="javascript/controllers.js")
+    script(src="javascript/services.js")
   
-  body(ng-app="strator", ng-controller="ctrlMain")
+  body
     h1 {{title}}
     
