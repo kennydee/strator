@@ -11,7 +11,8 @@
     "stylus": "*",
     "mongoose": "*",
     "async": "*",
-    "underscopre": "*"
+    "underscore": "*",
+    "cors": "*"
   },
   "devDependencies": {
     "supertest": "*",
@@ -20,6 +21,6 @@
     "mocha": "*",
     "optimist": "*",
     "jshint": "*",
-    "pow-mongodb-fixtures": "*",
+    "pow-mongodb-fixtures": "*"
   }
 }

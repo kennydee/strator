@@ -6,6 +6,7 @@ Start express application.
     express = require 'express'
     http = require 'http'
     path = require 'path'
+    cors = require 'cors'
     models = require __dirname + '/models'
     routes = require __dirname + '/routes'
     fixtures = require __dirname + '/fixtures'
@@ -26,6 +27,7 @@ Settings
     app.set 'view engine', 'jade'
     app.use express.favicon()
     app.use express.logger('dev')
+    app.use cors()
     app.use express.bodyParser()
     app.use express.methodOverride()
     app.use express.cookieParser('your secret here')
