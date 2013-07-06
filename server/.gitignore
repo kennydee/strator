@@ -1,11 +1,5 @@
 node_modules
-app.js
+*.js
 coverage
-fixtures/*.js
-fixtures/**/*.js
-models/*.js
-models/**/*.js
-routes/*.js
-routes/**/*.js
-test/*.js
+lib/**/*.js
 test/**/*.js

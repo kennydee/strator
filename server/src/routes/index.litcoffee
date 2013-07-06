@@ -85,7 +85,7 @@ Liste des fournisseurs existants / ajout de fournisseur
         res.send 201, saved
         
     exports.api_item_detail = (req, res) ->
-      item = models.Item.findOne {_id: req.params.id},
+      models.Item.findOne {_id: req.params.id},
         (err, itm) ->
           if not err
             res.send 200, itm

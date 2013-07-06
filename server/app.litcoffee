@@ -3,23 +3,25 @@ Strator main application
 
 Start express application.
 
+    LIB = __dirname + '/lib'
+    ENV = process.env.NODE_ENV || "development"
+    CONFIG = __dirname + '/config'
+
+    
     express = require 'express'
     http = require 'http'
     path = require 'path'
     cors = require 'cors'
-    models = require __dirname + '/models'
-    routes = require __dirname + '/routes'
-    fixtures = require __dirname + '/fixtures'
+    models = require LIB + '/models'
+    routes = require LIB + '/routes'
+    fixtures = require LIB + '/fixtures'
 
     app = express()
 
 
 Settings
 
-    LIB = __dirname + '/lib'
-    ENV = process.env.NODE_ENV || "development"
-    CONFIG = __dirname + '/config'
-
+    
     app.set 'dbname', "strator"
     app.set 'dbparams', {host: "localhost"}
     app.set 'port', process.env.PORT || 3000
