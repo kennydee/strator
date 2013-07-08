@@ -1,11 +1,8 @@
 module.exports = (grunt) ->
   grunt.initConfig(
     pkg: grunt.file.readJSON('package.json'),
-
-    jshint:
-      files: ['lib/**/*.js',
-              'test/**/*.js']
     
+    # Make js files from coffeescript
     coffee:
       lib:
         files: [
@@ -26,7 +23,30 @@ module.exports = (grunt) ->
           ext: '.js'
         }]
 
-   
+    # JSHint javascript files
+    jshint:
+      files: ['lib/**/*.js',
+              'test/**/*.js']
+
+    # Make html files from jade
+    jade:
+      partials:
+        files: [{
+            expand: true,
+            cwd: 'src/partials/',
+            src: ['**/*.jade'],
+            dest: 'lib/partials/',
+            ext: '.html'
+          }]
+      dev:
+        files:
+          'lib/index.html': 'src/index-dev.jade'
+      build:
+        files:
+          'dist/index.html': 'src/index.jade'
+
+
+    # Compile and prefetch templates
     ngtemplates:
       strator:
         options:
@@ -35,7 +55,7 @@ module.exports = (grunt) ->
         src: 'lib/partials/*.html'
         dest: 'lib/templates.js'
         
-   
+    # Minimize javascript
     uglify:
       app:
         files: 
@@ -52,7 +72,7 @@ module.exports = (grunt) ->
         compress: true
       },
         
-    
+    # Compress files (gzip, for server)
     compress:
       main:
         options:
@@ -62,26 +82,14 @@ module.exports = (grunt) ->
         src: ['**/*'],
         dest: 'dist/'
      
-    
+    # Clean for dist files
     clean:
       dev: ['bower_components', 'dist', 'lib', 'node_modules']
     
-    jade:
-      partials:
-        files: [{
-            expand: true,
-            cwd: 'src/partials/',
-            src: ['**/*.jade'],
-            dest: 'lib/partials/',
-            ext: '.html'
-          }]
-      main:
-        files:
-          'dist/index.html': 'src/index.jade'
    
     watch:
-      files: ['src/**/*.litcoffee', 'test/**/*.litcoffee']
-      tasks: ['coffee', 'jshint']
+      files: ['src/**/*.*', 'test/**/*.*']
+      tasks: ['coffee', 'jshint', 'jade']
   )
 
   grunt.loadNpmTasks('grunt-angular-templates')
@@ -92,6 +100,7 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks('grunt-contrib-coffee')
   grunt.loadNpmTasks('grunt-contrib-clean')
   grunt.loadNpmTasks('grunt-contrib-compress')
+  grunt.loadNpmTasks('grunt-contrib-watch')
   
   grunt.registerTask('test', [])
 

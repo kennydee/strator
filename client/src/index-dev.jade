@@ -1,0 +1,28 @@
+doctype
+
+html(ng-app="strator", lang="en")
+  head
+    meta(charset="utf-8")
+    meta(name="viewport"
+      content="width=device-width, initial-scale=1.0")
+    meta(name="description"
+      content="Strator client")
+    meta(name="author"
+      content="JM Barbier jm.barbier@solidev.net")
+    title Strator
+  
+    
+    script(src="../bower_components/angular/angular.js")    
+    script(src="../bower_components/angular-bootstrap/ui-bootstrap.js")
+    script(src="javascript/app.js")
+    script(src="javascript/controllers.js")
+    script(src="javascript/services.js")
+    
+
+    link(rel='stylesheet', href='../bower_components/bootstrap-css/css/bootstrap.css', type='text/css' )
+    link(rel='stylesheet', href='../bower_components/bootstrap-css/css/bootstrap-responsive.css', type='text/css' )
+    
+  body
+    div.container(ng-view)
+    h1 {{title}}
+    
