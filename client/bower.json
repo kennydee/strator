@@ -15,5 +15,9 @@
     "bower_components",
     "test",
     "tests"
-  ]
+  ],
+  "devDependencies": {
+    "angular-scenario": "~1.0.7",
+    "angular-mocks": "~1.0.7"
+  }
 }
