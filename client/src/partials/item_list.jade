@@ -5,10 +5,16 @@ div(ng-repeat="item in items")
   
 h2 Fournisseurs
 a(ng-click="addProvider()") Ajouter un fournisseur
+div(ng-repeat="provider in providers")
+  {{provider.title}}
 
 
 h2 Emplacements
 a Ajouter un emplacement
+div(ng-repeat="place in places")
+  {{place.title}}
 
 h2 Sécurité
 a  Ajouter un élément de sécurité
+div(ng-repeat="security in securities")
+  {{security.title}}

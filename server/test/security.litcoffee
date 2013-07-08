@@ -24,7 +24,7 @@ Testing scurity infos
         describe "GET security", ->
           it "should return a list of security data", (done) ->
             request(app)
-              .get('/security')
+              .get('/securities')
               .set('Accept','application/json')
               .end (err, res) ->
                 res.body.should.have.lengthOf 1
@@ -33,7 +33,7 @@ Testing scurity infos
         describe "POST security", ->
           it "should create a security", (done) ->
             request(app)
-              .post('/security')
+              .post('/securities')
               .send
                 type: "R"
                 code: "R11"
