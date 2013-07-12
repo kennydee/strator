@@ -12,5 +12,7 @@ Defines states and deps
       $routeProvider.when "/additem",
         controller: 'itemAddCtrl',
         templateUrl: 'partials/item_add.html'
+      $routeProvider.otherwise
+        redirectTo: "/list"       
     ]
 
