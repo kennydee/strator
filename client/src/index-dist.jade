@@ -23,8 +23,7 @@ html(ng-app="strator", lang="en").no-js
     meta(name="author"
       content="JM Barbier jm.barbier@solidev.net")
 
-    link(rel='stylesheet', href='lib/bootstrap-css/css/bootstrap.css', type='text/css' )
-    link(rel='stylesheet', href='lib/bootstrap-css/css/bootstrap-responsive.css', type='text/css' )
+    link(rel="stylesheet", href="css/app.min.css", type="text/css")
 
 
     link(rel="shortcut icon"
@@ -41,7 +40,8 @@ html(ng-app="strator", lang="en").no-js
 
     title Strator
 
-    script(src='lib/modernizr/modernizr.js')
+    // script(src='lib/modernizr/modernizr.js')
+    script(src="js/app.min.js")
 
 
 
@@ -61,10 +61,3 @@ html(ng-app="strator", lang="en").no-js
     h1 HEADER
     div.container(ng-view)
     h1 {{title}}
-
-
-    script(src="lib/angular/angular.js")
-    script(src="lib/angular-bootstrap/ui-bootstrap-tpls.js")
-    script(src="javascript/app.js")
-    script(src="javascript/controllers.js")
-    script(src="javascript/services.js")

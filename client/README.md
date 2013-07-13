@@ -4,6 +4,8 @@ STRATOR CLIENT
 Installation & construction
 
     $ npm install
-    $ bower install
-    $ grunt
-    $ npm start
+    $ grunt dev
+
+Build
+
+    $ grunt dist

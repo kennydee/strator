@@ -6,49 +6,58 @@ mountFolder = (connect, dir) ->
 
 module.exports = (grunt) ->
   require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks)
-  
-  cfg = 
-    app: 'app'
-    dist: 'dist'
-    dev: 'dev',
-    devtest: 'devtest',
-  #  try {
-  #      yeomanConfig.app = require('./bower.json').appPath || yeomanConfig.app;
-  #  } catch (e) {}
+
+  # Directory configuration
+  cfg =
+    dist: 'dist'         # Dist files
+    dev: 'dev'           # Dev output directory
+    devtest: 'devtest'   # Dev test output directory
+    src: 'src'           # Source directory
+    srctest: 'srctest'   # Source test directory
+
 
   grunt.initConfig(
 
+    # Package infos
     pkg: grunt.file.readJSON('package.json')
 
+    # Directory config
     cfg: cfg
-    
-    # WATCH coffe changes, jade changes, stylus changes & livereload all
+
+    #---------------------------------------------------------------------------
+    # WATCH coffe changes, jade changes, stylus changes & livereload for all
     watch:
+
       coffeesrc:
-        files: ['src/**/*.litcoffee']
+        files: ['<%= cfg.src %>/**/*.litcoffee']
         tasks: ['coffee:src', 'jshint:src']
+
       coffeetest:
-        files: ['test/**/*.litcoffee']
-        tasks: ['coffee:test', 'jshist:test']
+        files: ['<%= cfg.srctest %>/**/*.litcoffee']
+        tasks: ['coffee:test', 'jshint:test']
+
       jade:
-        files: ['src/**/*.jade']
+        files: ['<%= cfg.src %>/**/*.jade']
         tasks: ['jade:src']
+
       stylus:
-        files: ['src/**/*.styl*']
+        files: ['<%= cfg.src %>/**/*.styl*']
         tasks: ['stylus:src']
+
       livereload:
         options:
           livereload: LIVERELOAD_PORT
-        files: [
-          'dev/**/*.*'
-        ]
-    
-    # Serve dev files
+        files: ['<%= cfg.dev %>/**/*.*', '<%= cfg.srctest %>/**/*.*']
+
+    #---------------------------------------------------------------------------
+    # SERVE dev files & dist
     connect:
+
       options:
         port: 9000
         hostname: 'localhost'
-      livereload:
+
+      dev:
         options:
           middleware: (connect) ->
             [ lrSnippet, mountFolder(connect, cfg.dev),
@@ -60,116 +69,144 @@ module.exports = (grunt) ->
               mountFolder(connect, cfg.test) ]
       dist:
         options:
-          middleware: (connect) -> 
+          middleware: (connect) ->
             [ mountFolder(connect, cfg.dist) ]
 
-    # Open server
+    #---------------------------------------------------------------------------
+    # OPEN browser
     open:
       server:
         url: 'http://localhost:<%= connect.options.port %>'
-          
-    
-    # Clean project
+
+
+    #---------------------------------------------------------------------------
+    # Clean project before build or commit
     clean:
       dist:
         files: [{
           dot: true
-          src: [cfg.dev, cfg.dist]
+          src: [cfg.dev, cfg.dist, cfg.devtest, 'components']
         }]
-      dec: cfg.dev
-      
+
+    # Install components with bower
+    bower:
+      install:
+        options:
+          targetDir: './dev/lib'
+          layout: 'byComponent'
+          install: true
+          verbose: false
+          cleanTargetDir: true
+          cleanBowerDir: true
+
+    # Install modernizr
+    modernizr:
+      devFile: "<%= cfg.dev %>/lib/modernizr/modernizr-dev.js"
+      outputFile: "<%= cfg.dev %>/lib/modernizr/modernizr-dist.js"
+      uglify: false
+      parseFiles: false
+      tests: []
+      extra :
+        shiv : true
+        printshiv : false,
+        load : false
+        mq : false
+        cssclasses : true
+
+    #---------------------------------------------------------------------------
     # JSHint javascript files
     jshint:
-      src: ['dev/**/*.js']
-      test: ['devtest/**/*.js']
-    
+      dev: ['<%= cfg.dev %>/**/*.js']
+      test: ['<%= cfg.devtest %>/**/*.js']
+
+    #---------------------------------------------------------------------------
     # Make js files from coffeescript
     coffee:
       src:
         files: [
           {
             expand: true,
-            cwd: 'src/',
+            cwd: '<%= cfg.src %>/',
             src: ['**/*.litcoffee'],
-            dest: 'dev/',
+            dest: '<%= cfg.dev %>/',
             ext: '.js'
           }
         ]
       test:
         files: [{
           expand: true,
-          cwd: 'test/',
+          cwd: '<%= cfg.srctest %>/',
           src: ['**/*.litcoffee'],
-          dest: 'devtest/',
+          dest: '<%= cfg.devtest %>/',
           ext: '.js'
         }]
 
-
+    #---------------------------------------------------------------------------
     # Make html files from jade
     jade:
       src:
         files: [{
             expand: true,
-            cwd: 'src/partials/',
+            cwd: '<%= cfg.src %>/',
             src: ['**/*.jade'],
-            dest: 'dev/partials/',
+            dest: '<%= cfg.dev %>/',
             ext: '.html'
           }]
-      dev:
-        files:
-          'dev/index.html': 'src/index-dev.jade'
-      dist:
-        files:
-          'dist/index.html': 'src/index.jade'
 
-
+    #---------------------------------------------------------------------------
     # Image minifier
-    imagemin: {
-      dist: {
+    imagemin:
+      dist:
         files: [{
           expand: true,
           cwd: '<%= cfg.src %>/images',
           src: '**.{png,jpg,jpeg}',
           dest: '<%= cfg.dist %>/images'
         }]
-      }
-    },
 
-    # Compile and prefetch templates
+    #---------------------------------------------------------------------------
+    # Compile and prefetch partials
     ngtemplates:
-      strator:
+      dist:
         options:
           base:       'dev/'
           prepend:    ''
-        src: 'dev/partials/*.html'
-        dest: 'dev/templates.js'
-        
+          module:
+            name: 'strator'
+            define: false
+        src: '<%= cfg.dev %>/partials/*.html'
+        dest: '<%= cfg.dev %>/templates.js'
 
+
+    #---------------------------------------------------------------------------
     # Compile stylus stylesheets
     stylus:
       app:
         files:
-          'dev/css/app.css': ['src/**/*.stylus']
+          '<%= cfg.dev %>/css/app.css': ['<%= cfg.src %>/**/*.stylus']
       options:
         compress: false
-    
+
+    #---------------------------------------------------------------------------
     # Minimize css
     cssmin:
       minify:
         files:
-          'dist/css/app.min.css': [
-            'bower_components/bootstrap-css/css/bootstrap.css',
-            'bower_components/bootstrap-css/bootstrap-responsive.css',
-            'lib/css/app.css']
+          '<%= cfg.dist %>/css/app.min.css': [
+            '<%= cfg.dev %>/lib/bootstrap-css/css/bootstrap.css',
+            '<%= cfg.dev %>/lib/bootstrap-css/bootstrap-responsive.css',
+            '<%= cfg.dev %>/css/app.css']
 
     # Minimize javascript
     uglify:
       dist:
         files:
-          'dist/js/app.min.js': [
-            'bower_components/angular/angular.js',
-            'bower_components/angular-bootstrap/ui-bootstrap.js',
-            'lib/**/*.js']
+          '<%= cfg.dist %>/js/app.min.js': [
+            '<%= cfg.dev %>/lib/angular/angular.js',
+            '<%= cfg.dev %>/lib/angular-bootstrap/ui-bootstrap-tpls.js',
+            '<%= cfg.dev %>/javascript/**/*.js',
+            '<%= cfg.dev %>/templates.js'
+            ]
       options: {
         banner: '/*! <%= pkg.name %> - v<%= pkg.version %> - ' +
           '<%= grunt.template.today("yyyy-mm-dd") %> */'
@@ -177,25 +214,39 @@ module.exports = (grunt) ->
         report: 'min'
         compress: true
       },
-        
+
     # Compress files (gzip, for server)
     compress:
       main:
         options:
           mode: 'gzip'
         expand: true,
-        cwd: 'dist/',
+        cwd: '<%= cfg.dist %>/',
         src: ['**/*'],
-        dest: 'dist/'
+        dest: '<%= cfg.dist %>/'
 
     # Copy other files
     copy:
+
+      dev:
+        files: [{
+          expand: true
+          dot: true
+          cwd: '<%= cfg.src %>'
+          dest: '<%= cfg.dist %>'
+          src: [
+            '*.{ico,png,txt}',
+            '.htaccess',
+            'images/**.{gif,webp,svg}',
+            'styles/fonts/*'
+          ]}]
+
       dist:
         files: [{
           expand: true
           dot: true
-          cwd: 'src'
-          dest: 'dist'
+          cwd: '<%= cfg.src %>'
+          dest: '<%= cfg.dist %>'
           src: [
             '*.{ico,png,txt}',
             '.htaccess',
@@ -203,27 +254,28 @@ module.exports = (grunt) ->
             'styles/fonts/*'
           ]}, {
             expand: true,
-            cwd: 'dev/images',
-            dest: 'dist/images',
+            cwd: '<%= cfg.dev %>/images',
+            dest: '<%= cfg.dist %>/images',
             src: ['generated/*']
-        }]
+        },
+        { '<%= cfg.dist %>/index.html': '<%= cfg.dev %>/index-dist.html'}
+        ]
 
 
     # Concurrent
     concurrent:
-      server: [
-        'coffee:dist'
+      compile: [
+        'coffee','jade','stylus','copy:dev'
       ],
-      test: [
-        'coffee'
-      ],
-      dist: [
-        'coffee',
-        'imagemin',
-        'htmlmin'
+
+      downloads: [
+        'bower', 'modernizr'
       ]
-      
-    
+      dev: [
+        'watch', 'server:dev'
+      ]
+
+
     # Test
     test:
       unit: './test/karma-unit-conf.js',
@@ -234,21 +286,21 @@ module.exports = (grunt) ->
       unit: './test/karma-unit-conf.js',
       #midway: './test/karma-midway.conf.js',
       e2e: './test/karma-e2e-conf.js'
+  )
 
-  grunt.registerTask 'build', ['coffee', 'jshint', 'jade', 'ngtemplates', 
-    'stylus', 'cssmin', 'uglify', 'compress'])
-    
+  #===========================================================================
+  # GLOBAL TASKS
+
+  grunt.registerTask 'build', [
+    'clean', 'concurrent:downloads', 'concurrent:compile', 'copy:dist', 'ngtemplates',
+    'cssmin', 'imagemin', 'uglify', 'compress'
+  ]
+
+  # Run server (default : dev with livereload + watch)
   grunt.registerTask 'server', (target) ->
     if (target == 'dist')
       grunt.task.run(['build', 'open', 'connect:dist:keepalive'])
-      
+
     grunt.task.run([
-     # 'clean:server',
-     # 'concurrent:server',
-      'build',
-      'connect:livereload',
-      'open',
-      'watch'
+      'coffee','jade','stylus','bower', 'modernizr','copy:dev','connect:dev','watch'
     ])
-
-

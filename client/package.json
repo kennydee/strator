@@ -34,10 +34,11 @@
     "matchdep": "~0.1.2",
     "connect-livereload": "~0.2.0",
     "grunt-google-cdn": "~0.2.0",
-    "grunt-ngmin": "~0.0.2"
+    "grunt-ngmin": "~0.0.2",
+    "grunt-bower-task": "~0.2.3",
+    "grunt-modernizr": "~0.3.0"
   },
   "engines": {
     "node": ">=0.8.0"
   }
-
 }

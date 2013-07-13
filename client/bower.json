@@ -11,6 +11,21 @@
     "bootstrap-css": "~2.3.2",
     "es5-shim": "~2.0.8"
   },
+  "exportsOverride": {
+    "angular-ui-router": {
+      "": "release/angular-ui-router.js"
+    },
+    "es5-shim": {
+      "": "es5-shim.js"
+    },
+    "modernizr": {
+      "": "modernizr.js"
+    },
+    "bootstrap-css": {
+      "css": "css/*.css",
+      "img": "img/*.png"
+    }
+  },
   "ignore": [
     "**/.*",
     "node_modules",
@@ -19,8 +34,10 @@
     "test",
     "tests"
   ],
+  "directory": "dev/bower",
   "devDependencies": {
     "angular-scenario": "~1.0.7",
-    "angular-mocks": "~1.0.7"
+    "angular-mocks": "~1.0.7",
+    "modernizr": "~2.6.2"
   }
 }
