@@ -47,7 +47,7 @@ module.exports = (grunt) ->
       livereload:
         options:
           livereload: LIVERELOAD_PORT
-        files: ['<%= cfg.dev %>/**/*.*', '<%= cfg.srctest %>/**/*.*']
+        files: ['<%= cfg.dev %>/**/*.*', '<%= cfg.devtest %>/**/*.*']
 
     #---------------------------------------------------------------------------
     # SERVE dev files & dist
@@ -116,7 +116,7 @@ module.exports = (grunt) ->
     #---------------------------------------------------------------------------
     # JSHint javascript files
     jshint:
-      dev: ['<%= cfg.dev %>/**/*.js']
+      src: ['<%= cfg.dev %>/javascript/*.js']
       test: ['<%= cfg.devtest %>/**/*.js']
 
     #---------------------------------------------------------------------------

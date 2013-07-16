@@ -13,6 +13,5 @@ Defines states and deps
         controller: 'itemAddCtrl',
         templateUrl: 'partials/item_add.html'
       $routeProvider.otherwise
-        redirectTo: "/list"       
+        redirectTo: "/list"
     ]
-
