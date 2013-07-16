@@ -14,7 +14,7 @@ Testing places infos
 
     describe "Places data", ->
       beforeEach (done) ->
-        fixtures = require '../fixtures'
+        fixtures = require '../lib/fixtures'
         fixtures.clear app, ['places'], () ->
           fixtures.load app, ['places'], done
 
@@ -42,4 +42,3 @@ Testing places infos
                 res.body.should.have.property "place"
                 res.body.place.should.be.equal "Tiroir jaune"
                 done()
-

@@ -7,12 +7,11 @@ Start express application.
     ENV = process.env.NODE_ENV || "development"
     CONFIG = __dirname + '/config'
 
-    
+
     express = require 'express'
     http = require 'http'
     path = require 'path'
     cors = require 'cors'
-    models = require LIB + '/models'
     routes = require LIB + '/routes'
     fixtures = require LIB + '/fixtures'
 
@@ -21,7 +20,7 @@ Start express application.
 
 Settings
 
-    
+
     app.set 'dbname', "strator"
     app.set 'dbparams', {host: "localhost"}
     app.set 'port', process.env.PORT || 3000
@@ -43,11 +42,31 @@ Settings
       app.use express.errorHandler()
 
 
+
+
+Launch Database and models
+
+    mongoose = require 'mongoose'
+    mongoose.connect 'mongodb://localhost/strator'
+
+    db = mongoose.connection
+    db.on 'error', console.error.bind(console, "Connection error")
+
+
+    models = require(LIB + '/models')
+
+
+
 Apply public vision routes
+
+    routes = require LIB + '/routes'
+    fixtures = require LIB + '/fixtures'
 
     app.get '/', routes.index
 
-API Routes 
+API Routes
+
+    app.get '/ping', routes.api_ping
 
     app.get '/items', routes.api_item_list
     app.get '/items/:id', routes.api_item_detail
@@ -59,11 +78,10 @@ API Routes
     app.post '/places', routes.api_place_add
     app.post '/providers', routes.api_provider_add
     app.post '/securities', routes.api_security_add
-    
+
 
     if require.main is module
       http.createServer(app).listen app.get('port'), () ->
         console.log 'Express server listening on port ' + app.get('port')
     else
       module.exports = app
-  

@@ -14,21 +14,9 @@ Elements de base de données
 Modèles pour la description d'un inventaire de laboratoire.
 
 
-    mongoose = require 'mongoose'
-    mongoose.connect 'mongodb://localhost/strator'
-    
-    db = mongoose.connection
-    db.on 'error', console.error.bind(console, "Connection error")
-    
-    itemSchema = mongoose.Schema {
-      title: String
-    }
-    
-
 ### Liste des modèles
 
     exports.Provider = require('./provider').Provider
     exports.Place = require('./place').Place
     exports.Security = require('./security').Security
     exports.Item = require('./item').Item
-

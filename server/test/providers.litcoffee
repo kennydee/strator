@@ -14,7 +14,7 @@ Testing providers
 
     describe "Provider", ->
       beforeEach (done) ->
-        fixtures = require '../fixtures'
+        fixtures = require '../lib/fixtures'
         fixtures.clear app, ['providers'], () ->
           fixtures.load app, ['providers'], done
 
@@ -40,4 +40,3 @@ Testing providers
                 res.body.should.have.property "title"
                 res.body.title.should.be.equal "Test"
                 done()
-

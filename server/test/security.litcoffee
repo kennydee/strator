@@ -14,7 +14,7 @@ Testing scurity infos
 
     describe "Security data", ->
       beforeEach (done) ->
-        fixtures = require '../fixtures'
+        fixtures = require '../lib/fixtures'
         fixtures.clear app, ['securities'], () ->
           fixtures.load app, ['securities'], done
 
@@ -44,4 +44,3 @@ Testing scurity infos
                 res.body.should.have.property "code"
                 res.body.code.should.be.equal "R11"
                 done()
-

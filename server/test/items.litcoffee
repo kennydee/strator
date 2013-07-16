@@ -14,7 +14,7 @@ Testing items infos
 
     describe "Items data", ->
       beforeEach (done) ->
-        fixtures = require '../fixtures'
+        fixtures = require '../lib/fixtures'
         fixtures.clear app, ['securities','providers','items', 'places'], () ->
           fixtures.load app, ['securities', 'providers', 'items', 'places'], done
 
@@ -29,7 +29,7 @@ Testing items infos
               .end (err, res) ->
                 res.body.should.have.lengthOf 1
                 done()
-        
+
         describe "GET item by id", ->
           it "should return an item details", (done) ->
             request(app)
@@ -52,4 +52,3 @@ Testing items infos
                 res.body.should.have.property "title"
                 res.body.title.should.be.equal "Michelson"
                 done()
-
