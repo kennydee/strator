@@ -5,14 +5,13 @@ Client : angularjs
 
 Server : nodejs / express / mongodb
 
+Specs & tests : robotframework
+
 
 Installation
 ------------
 
 Dépendances :
-
+* python (for specs & tests)
 * nodejs
-* bower
 * grunt-cli
-
-

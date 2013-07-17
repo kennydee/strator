@@ -72,12 +72,12 @@ API Routes
     app.get '/items/:id', routes.api_item_detail
     app.get '/places', routes.api_place_list
     app.get '/providers', routes.api_provider_list
-    app.get '/securities', routes.api_security_list
+    app.get '/security', routes.api_security_list
 
     app.post '/items', routes.api_item_add
     app.post '/places', routes.api_place_add
     app.post '/providers', routes.api_provider_add
-    app.post '/securities', routes.api_security_add
+    app.post '/security', routes.api_security_add
 
 
     if require.main is module

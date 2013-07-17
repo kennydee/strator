@@ -33,15 +33,20 @@ Installer le serveur
 
 Lancer le serveur
     Start Process      ${NODE}     app.js   cwd=${SERVER_PATH}    alias=server
-    Sleep              1s
+    Sleep              5s
 
 Lancer le client
-    Start Process      grunt server:dist   cwd=${CLIENT_PATH}    alias=client
-    Sleep              1s
+    Run Process      grunt      build   cwd=${CLIENT_PATH}
+    Start Process      grunt      connect:dist:keepalive   cwd=${CLIENT_PATH}    alias=client
+    Sleep              5s
 
 Démarrer le serveur
     Installer le serveur
     Lancer le serveur
+
+Démarrer le client
+    Installer le client
+    Lancer le client
 
 Eteindre le serveur
     [Documentation]    Tue le process group du serveur
@@ -54,8 +59,16 @@ Eteindre le client
     [Documentation]    Utilise des fonctionnalités à mon avis très "linuxiennes"
     ...                Utilise des fonctionnalités probablement "linux only"
     ${CLIENT_PID}=     Get Process Id    client
-    Run Process        kill ${SERVER_PID}    shell=True
+    Run Process        kill ${CLIENT_PID}    shell=True
     Sleep              2s
+
+Démarrer client et serveur
+    Démarrer le serveur
+    Démarrer le client
+
+Eteindre client et serveur
+    Eteindre le client
+    Eteindre le serveur
 
 Clear Database
     Run Process        mongo strator --eval "db.dropDatabase();"    shell=True
