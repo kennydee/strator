@@ -10,7 +10,7 @@ Karma client configuration
     files = [
       MOCHA,
       MOCHA_ADAPTER,
-      'test/e2e/*.js'
+      'devtest/e2e/*.js'
     ]
 
 

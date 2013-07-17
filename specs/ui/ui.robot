@@ -10,6 +10,11 @@ Page d'accueil
     Ouvrir le navigateur
     Wait Until Page Contains    Strator
 
+
+Inscription
+    [Documentation]    Deux types d'inscription : rejoindre un groupe déjà constitué
+    ...                ou bien créer un nouveau laboratoire
+    Fail               Test not ready    not-ready
 *** Keywords ***
 Ouvrir le navigateur
     Open Browser    http://${CLIENT_URL}/index.html    browser=firefox
